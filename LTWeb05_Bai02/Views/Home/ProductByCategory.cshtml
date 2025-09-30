@@ -1,0 +1,61 @@
+﻿@model LTWeb05_Bai02.ViewModels.ProductByCategoryViewModel
+
+@{
+    ViewBag.Title = "Product by Category";
+}
+
+<h2>Product by Category</h2>
+
+@using (Html.BeginForm("ProductByCategory", "Home", FormMethod.Get))
+{
+    <div class="form-inline mb-3">
+        <label for="selectedCategory" class="mr-2">Choose an Category</label>
+
+        <select id="selectedCategory" name="selectedCategory" class="dropdown" onchange="this.form.submit()">
+            <option value="">-- All --</option>
+            @foreach (var c in Model.Categories)
+            {
+                var val = c.Loai.ToString();
+                var sel = Model.SelectedCategory.HasValue && Model.SelectedCategory.Value == c.Loai ? "selected" : "";
+                <option value="@val" @Html.Raw(sel)>@c.TenLoai</option>
+            }
+        </select>
+    </div>
+}
+
+
+@if (Model.Products != null && Model.Products.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>MaSP</th>
+                <th>TenSP</th>
+                <th>DuongDan</th>
+                <th>Gia</th>
+                <th>MoTa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.Products)
+            {
+                <tr>
+                    <td>@p.MaSP</td>
+                    <td>@p.TenSP</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(p.DuongDan))
+                        {
+                            <img src="@Url.Content("~/Content/Images/" + p.DuongDan)" style="max-width:80px" />
+                        }
+                    </td>
+                    <td>@p.Gia</td>
+                    <td>@p.MoTa</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Không có sản phẩm cho loại này.</div>
+}

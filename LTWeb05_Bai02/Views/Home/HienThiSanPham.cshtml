@@ -1,0 +1,28 @@
+﻿@model IEnumerable<LTWeb05_Bai02.Models.SanPham>
+@{
+    ViewBag.Title = "HienThiSanPham";
+}
+
+<h2>HienThiSanPham</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Đường dẫn</th>
+            <th>Đơn giá</th>
+            <th>Mô tả</th>
+            <th>Loại</th>
+        </tr>
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(itemModel => item.MaSP)</td>
+            <td>@Html.DisplayFor(itemModel => item.TenSP)</td>
+            <td>@Html.DisplayFor(itemModel => item.DuongDan)</td>
+            <td>@Html.DisplayFor(itemModel => item.Gia)</td>
+            <td>@Html.DisplayFor(itemModel => item.MoTa)</td>
+            <td>@Html.DisplayFor(itemModel => item.Loai) </td>
+        </tr>
+        }
+</table>

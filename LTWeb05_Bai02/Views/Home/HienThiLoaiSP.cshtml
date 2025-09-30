@@ -1,0 +1,23 @@
+﻿@model IEnumerable<LTWeb05_Bai02.Models.LoaiSP>   
+    @{
+        ViewBag.Title = "HienThiLoaiSP";
+    }
+
+    <h2>HienThiLoaiSP</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Mã loại</td>
+            <td>Tên loại</td>
+        </tr>
+    </thead>
+     @foreach(var item in Model)
+      {
+        <tr>
+             <td>@Html.DisplayFor(ModelItem => item.Loai) </td>
+             <td>@Html.DisplayFor(ModelItem => item.TenLoai)
+            @Html.ActionLink("Xem chi tiết","SanPham_Loai",new {id = item.Loai})</td>
+        </tr>
+      } 
+</table>
+

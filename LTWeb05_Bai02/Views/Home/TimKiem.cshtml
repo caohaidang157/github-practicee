@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LTWeb05_Bai02.Models.SanPham>
+@{
+    ViewBag.Title = "Tìm kiếm sản phẩm";
+    var keyword = ViewBag.TuKhoa as string ?? "";
+}
+
+<h2>Tìm kiếm sản phẩm</h2>
+
+<!-- Form tìm kiếm dùng GET để url có thể chia sẻ -->
+@using (Html.BeginForm("TimKiem", "Home", FormMethod.Get))
+{
+    <div class="form-inline mb-3">
+        @Html.TextBox("tukhoa", keyword, new { @class = "form-control mr-2", placeholder = "Nhập tên sản phẩm hoặc mô tả..." })
+        <button type="submit" class="btn btn-primary">Tìm</button>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(keyword))
+{
+    <h4>Kết quả cho "@keyword" — @(Model == null ? 0 : Model.Count()) sản phẩm</h4>
+    if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Mã SP</th>
+                    <th>Tên SP</th>
+                    <th>Ảnh</th>
+                    <th>Giá</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaSP</td>
+                        <td>@item.TenSP</td>
+                        <td>
+                            @if (!String.IsNullOrEmpty(item.DuongDan))
+                            {
+                                <img src="@Url.Content("~/Content/Images/" + item.DuongDan)" alt="@item.TenSP" style="max-width:80px;" />
+                            }
+                        </td>
+                        <td>@item.Gia</td>
+                        <td>@item.MoTa</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">Không tìm thấy sản phẩm nào.</div>
+    }
+}
+else
+{
+    <p>Nhập từ khóa và nhấn "Tìm" để tìm sản phẩm.</p>
+}
